@@ -22,7 +22,7 @@ $(bin):$(OBJECTS)
 %.o:%.cpp
 	$(CC) $(CCFLAGS) -c -o $@ $^
 
-test:
+test: $(bin)
 	./$(bin)
 
 clean:
