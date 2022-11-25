@@ -6,7 +6,7 @@ CC=g++
 OPT=
 
 DEPFLAGS=-MP -MD
-CCFALGS=-Wall -Wextra -g $(foreach D, $(INCLUDEDIRS), -I$(D)) $(OPT) $(DEPFLAGS)
+CCFALGS=-Wall -Wextra -g -std=c++20 $(foreach D, $(INCLUDEDIRS), -I$(D)) $(OPT) $(DEPFLAGS)
 
 CPPFILES=$(foreach D, $(CODEDIRS),$(wildcard $(D)/*.cpp))
 
