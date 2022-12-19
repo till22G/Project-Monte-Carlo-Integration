@@ -14,16 +14,36 @@ bool compareEstimationResults(double a, double b, double eps){
 }
 
 double integrand(std::vector<double> parameters){
-
     double res = sin(parameters[0] * parameters[0]* parameters[0]);
     return res;
-
 }
 
-TEST(IntegrationTest, HandelsCorrectInputs ){	
+TEST(IntegrationTest, HandelsCorrectInputs){	
 	std::vector<double> upper_limit;
 	upper_limit.push_back(2);
 	std::vector<double> lower_limit;
 	lower_limit.push_back(0);
-	EXPECT_TRUE(compareEstimationResults(0.452, Monte_Carlo_Integration::integrate(1, upper_limit, lower_limit, integrand), 1));
+	EXPECT_TRUE(compareEstimationResults(0.452, Monte_Carlo_Integration::integrate(1, upper_limit, lower_limit, integrand), 0.01));
 }
+
+TEST(IntegrationTest, HandelsZeroInput){	
+	std::vector<double> upper_limit;
+	upper_limit.push_back(0);
+	std::vector<double> lower_limit;
+	lower_limit.push_back(0);
+	EXPECT_EQ(0, Monte_Carlo_Integration::integrate(1, upper_limit, lower_limit, integrand));
+}
+
+
+/*
+MonteCarloIntegrationTest : public ::testing::Test {
+	protected: 
+		void SetUp() override {
+			std::vector<double> upper_limit;
+			upper_limit.push_back(2);
+			std::vector<double> lower_limit;
+			lower_limit.push_back(0);
+			
+		}
+}
+*/

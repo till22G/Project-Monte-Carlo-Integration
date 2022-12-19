@@ -22,6 +22,12 @@ double Monte_Carlo_Integration::integrate(  size_t num_variables,
         }
     }
 
+    // implement importance sampling?
+    // 
+
+    //integral over one or two bounds equal to infinity
+    // check if there is enough time for proper implementation
+
     // check if integral is 0 and return result
     if(integral_is_zero) return 0;
 
@@ -53,17 +59,17 @@ double Monte_Carlo_Integration::integrate(  size_t num_variables,
     for (auto& n : intervals){
         dim_intervals *= n;
     }
-    std::cout << "dim intervals: " << dim_intervals << std::endl;
+    //std::cout << "dim intervals: " << dim_intervals << std::endl;
 
     double cum_res = 0;
     for (auto& n : simulation_res){
         cum_res += n;
     }
 
-    std::cout << "cum res " << cum_res << std::endl;
+    //std::cout << "cum res " << cum_res << std::endl;
 
     // approximates result
     double approximation_res = dim_intervals * cum_res/nsim;
-    std::cout << approximation_res << std::endl;
+    //std::cout << approximation_res << std::endl;
     return approximation_res;
 }
