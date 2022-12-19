@@ -19,7 +19,7 @@ int main (int argc, char* argv[]){
 
     srand(time(0));
     std::vector<double> upper_limit;
-    upper_limit.push_back(2);
+    upper_limit.push_back(0);
     std::vector<double> lower_limit;
     lower_limit.push_back(0);
 

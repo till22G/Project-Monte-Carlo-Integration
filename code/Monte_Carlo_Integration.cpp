@@ -9,17 +9,21 @@ double Monte_Carlo_Integration::integrate(  size_t num_parameters,
                                             double (*integrand)(std::vector<double> parameters),
                                             size_t nsim){
 
-    //check if upper and lower are equal
-    for(size_t i = 0; i < upper_limits.size; i++){
-        if(upper_limits[i] != lower_limits[i]){break;}
-        if(i == upper_limits.size) {return 0}
-    }
 
     //calculate the size of the intervals between upper and lower limit    
-    std::vector<double> intervals;                                      
+    std::vector<double> intervals;
+    bool integral_is_zero = true;                            
     for(size_t i = 0; i < upper_limits.size();i++){
-        intervals.push_back(upper_limits[i] - lower_limits[i]); 
+        double interval_size = upper_limits[i] - lower_limits[i];
+        intervals.push_back(interval_size);
+        // check if interval size is zero
+        if(interval_size > 0){
+            integral_is_zero = false;
+        }
     }
+
+    // check if integral is 0 and return result
+    if(integral_is_zero) return 0;
 
     std::vector<double> simulation_res(nsim);
     //std::cout << "sim" << std::endl;
