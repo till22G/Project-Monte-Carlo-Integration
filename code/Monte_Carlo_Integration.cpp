@@ -2,6 +2,7 @@
 
 
 // currently this function does not work for improper integrals (one or more limits are infinity)
+// or the integral is infinite
 double Monte_Carlo_Integration::integrate(  size_t num_parameters, 
                                             std::vector<double> upper_limits, 
                                             std::vector<double> lower_limits,
@@ -9,7 +10,9 @@ double Monte_Carlo_Integration::integrate(  size_t num_parameters,
                                             size_t nsim){
 
     //check if upper and lower are equal
-
+    if(upper_limits == lower_limits){
+        return 0;
+    }
 
     //calculate the size of the intervals between upper and lower limit    
     std::vector<double> intervals;                                      
@@ -52,7 +55,7 @@ double Monte_Carlo_Integration::integrate(  size_t num_parameters,
         cum_res += n;
     }
 
-    std::cout << "cum res" << cum_res << std::endl;
+    std::cout << "cum res " << cum_res << std::endl;
 
     // ap
     double approximation_res = dim_intervals * cum_res/nsim;
