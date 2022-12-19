@@ -1,12 +1,12 @@
-#include "Monte_Carlo_Integration.h"
+#include "MonteCarloIntegration.h"
 
 
 // currently this function does not work for improper integrals (one or more limits are infinity)
 // or the integral is infinite
-double Monte_Carlo_Integration::integrate(  size_t num_parameters, 
+double Monte_Carlo_Integration::integrate(  size_t num_variables, 
                                             std::vector<double> upper_limits, 
                                             std::vector<double> lower_limits,
-                                            double (*integrand)(std::vector<double> parameters),
+                                            double (*integrand)(std::vector<double> variable_values),
                                             size_t nsim){
 
 
@@ -29,19 +29,19 @@ double Monte_Carlo_Integration::integrate(  size_t num_parameters,
     //std::cout << "sim" << std::endl;
 
     for(size_t i = 0; i < nsim; i++){
-        std::vector<double> parameters;
-        for(size_t j = 0 ; j < num_parameters; j++){
+        std::vector<double> variable_values;
+        for(size_t j = 0 ; j < num_variables; j++){
             //std::cout << "sample parameters" << std::endl;
             // pseudo random values for a first estimation
             // need to implement a better random generator
             double tmp = lower_limits[j] + (float(rand())/RAND_MAX) * intervals[j]; 
             //std::cout << "tmp: " << tmp << std::endl;
-            parameters.push_back(tmp);
+            variable_values.push_back(tmp);
             
         }
 
         // gather results        
-        simulation_res[i] = integrand(parameters);
+        simulation_res[i] = integrand(variable_values);
         //std::cout << "sim res: " << simulation_res[i] << std::endl;
 
     }
@@ -49,7 +49,7 @@ double Monte_Carlo_Integration::integrate(  size_t num_parameters,
     // multiply the dimensions used for the multidimensional integral
     // e.g. for two dimensin x1 * x2 (area) which gets multiplied with
     // the integrands result
-    double dim_intervals = 1;
+    double dim_intervals = 1; 
     for (auto& n : intervals){
         dim_intervals *= n;
     }
@@ -62,8 +62,8 @@ double Monte_Carlo_Integration::integrate(  size_t num_parameters,
 
     std::cout << "cum res " << cum_res << std::endl;
 
-    // ap
+    // approximates result
     double approximation_res = dim_intervals * cum_res/nsim;
-
+    std::cout << approximation_res << std::endl;
     return approximation_res;
 }
