@@ -10,8 +10,9 @@ double Monte_Carlo_Integration::integrate(  size_t num_parameters,
                                             size_t nsim){
 
     //check if upper and lower are equal
-    if(upper_limits == lower_limits){
-        return 0;
+    for(size_t i = 0; i < upper_limits.size; i++){
+        if(upper_limits[i] != lower_limits[i]){break;}
+        if(i == upper_limits.size) {return 0}
     }
 
     //calculate the size of the intervals between upper and lower limit    
