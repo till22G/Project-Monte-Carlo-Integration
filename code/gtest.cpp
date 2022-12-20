@@ -18,7 +18,6 @@ double integrand1(std::vector<double> parameters){
     return res;
 }
 
-
 double integrand2(std::vector<double> parameters){
 	double x = parameters[0];
     double res = (sin(sqrt(x)) * exp(sqrt(x))) / sqrt(x);
@@ -29,6 +28,14 @@ double integrand3(std::vector<double> parameters){
 	double a = parameters[0];
 	double b = parameters[1];
     double res = sin(a) + sin(b);
+    return res;
+}
+
+double integrand4(std::vector<double> parameters){
+	double a = parameters[0];
+	double b = parameters[1];
+	double c = parameters[2];
+    double res = sin(a) * sin(b) * sin(c);
     return res;
 }
 
@@ -60,6 +67,19 @@ TEST(IntegrationTestIntegral3, HandelsCorrectInputs){
 	lower_limit.push_back(0);
 	double result = 7.163;
 	EXPECT_TRUE(compareEstimationResults(result, Monte_Carlo_Integration::integrate(upper_limit, lower_limit, integrand3), 0.1));
+}
+
+TEST(IntegrationTestIntegral4, HandelsCorrectInputs){	
+	std::vector<double> upper_limit;
+	std::vector<double> lower_limit;
+	upper_limit.push_back(5);
+	lower_limit.push_back(0);
+	upper_limit.push_back(5);
+	lower_limit.push_back(0);
+	upper_limit.push_back(5);
+	lower_limit.push_back(0);
+	double result = 0.367;
+	EXPECT_TRUE(compareEstimationResults(result, Monte_Carlo_Integration::integrate(upper_limit, lower_limit, integrand4), 0.1));
 }
 
 TEST(IntegrationTest, HandelsZeroInput){	
