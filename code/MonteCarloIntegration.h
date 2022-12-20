@@ -2,6 +2,9 @@
 
 # include <vector>
 # include <iostream>
+# include <random>
+# include <chrono>
+# include <algorithm>
 
 class Monte_Carlo_Integration{
     private:
