@@ -18,26 +18,21 @@ double Monte_Carlo_Integration::integrate(  size_t num_variables,
 
     //calculate the size of the intervals between upper and lower limit    
     std::vector<double> intervals;
-    std::vector<double> random_points;
     bool integral_is_zero = true;
 
-    
     for(size_t i = 0; i < upper_limits.size(); i++){
 
         // calculate the interval size
         double interval_size = upper_limits[i] - lower_limits[i];
-        intervals.push_back(interval_size);
-
-        // check if interval size is zero
-        if(interval_size > 0){
-            integral_is_zero = false;
+        if(interval_size <= 0){
+            throw std::invalid_argument("Zero or negative intervals are not allowed");
+        }
+        else {
+            intervals.push_back(interval_size);
         }
     }
     
-    
-    // check if integral is 0 and return result 
-    if(integral_is_zero) return 0;
-
+    std::cout << "Number parameters " << upper_limits.size() << std::endl;
 
     std::vector<double> simulation_res(nsim);
     //std::cout << "sim" << std::endl;
@@ -47,6 +42,8 @@ double Monte_Carlo_Integration::integrate(  size_t num_variables,
     rng = std::mt19937(rd());
     std::uniform_real_distribution<double> dist;
 
+
+    std::cout << "start simulation" << std::endl;
     for(size_t i = 0; i < nsim; i++){
         std::vector<double> variable_values;
         for(size_t j = 0; j < num_variables; j++){
@@ -74,7 +71,7 @@ double Monte_Carlo_Integration::integrate(  size_t num_variables,
         cum_res += n;
     }
 
-    //std::cout << "cum res " << cum_res << std::endl;
+    std::cout << "cum res " << cum_res << std::endl;
 
     // approximates result
     double approximation_res = dim_intervals * cum_res/nsim;

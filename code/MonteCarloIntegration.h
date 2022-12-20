@@ -13,5 +13,5 @@ class Monte_Carlo_Integration{
                                 std::vector<double> upper_limits, 
                                 std::vector<double> lower_limits,
                                 double (*integrand)(std::vector<double> parameters),
-                                size_t nsim = 100000);
+                                size_t nsim = 1000000);
 }; 

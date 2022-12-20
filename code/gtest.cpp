@@ -13,17 +13,53 @@ bool compareEstimationResults(double a, double b, double eps){
 	return (fabs(a - b) < eps);
 }
 
-double integrand(std::vector<double> parameters){
+double integrand1(std::vector<double> parameters){
     double res = sin(parameters[0] * parameters[0]* parameters[0]);
     return res;
 }
 
-TEST(IntegrationTest, HandelsCorrectInputs){	
+
+double integrand2(std::vector<double> parameters){
+	double x = parameters[0];
+    double res = (sin(sqrt(x)) * exp(sqrt(x))) / sqrt(x);
+    return res;
+}
+
+double integrand3(std::vector<double> parameters){
+	double a = parameters[0];
+	double b = parameters[1];
+    double res = 1;
+    return res;
+}
+
+
+TEST(IntegrationTestIntegral1, HandelsCorrectInputs){	
 	std::vector<double> upper_limit;
-	upper_limit.push_back(2);
 	std::vector<double> lower_limit;
+	upper_limit.push_back(2);
 	lower_limit.push_back(0);
-	EXPECT_TRUE(compareEstimationResults(0.452, Monte_Carlo_Integration::integrate(1, upper_limit, lower_limit, integrand), 0.01));
+	double result = 0.451948;
+	EXPECT_TRUE(compareEstimationResults(result, Monte_Carlo_Integration::integrate(1, upper_limit, lower_limit, integrand1), 0.1));
+}
+
+TEST(IntegrationTestIntegral2, HandelsCorrectInputs){	
+	std::vector<double> upper_limit;
+	std::vector<double> lower_limit;
+	upper_limit.push_back(10);
+	lower_limit.push_back(1);
+	double result = 22.312;
+	EXPECT_TRUE(compareEstimationResults(result, Monte_Carlo_Integration::integrate(1, upper_limit, lower_limit, integrand2), 0.1));
+}
+
+TEST(IntegrationTestIntegral3, HandelsCorrectInputs){	
+	std::vector<double> upper_limit;
+	std::vector<double> lower_limit;
+	upper_limit.push_back(1);
+	lower_limit.push_back(0);
+	upper_limit.push_back(1);
+	lower_limit.push_back(0);
+	double result = 1;
+	EXPECT_TRUE(compareEstimationResults(result, Monte_Carlo_Integration::integrate(1, upper_limit, lower_limit, integrand3), 0.1));
 }
 
 TEST(IntegrationTest, HandelsZeroInput){	
@@ -31,19 +67,5 @@ TEST(IntegrationTest, HandelsZeroInput){
 	upper_limit.push_back(0);
 	std::vector<double> lower_limit;
 	lower_limit.push_back(0);
-	EXPECT_EQ(0, Monte_Carlo_Integration::integrate(1, upper_limit, lower_limit, integrand));
+	EXPECT_ANY_THROW(Monte_Carlo_Integration::integrate(1, upper_limit, lower_limit, integrand1));
 }
-
-
-/*
-MonteCarloIntegrationTest : public ::testing::Test {
-	protected: 
-		void SetUp() override {
-			std::vector<double> upper_limit;
-			upper_limit.push_back(2);
-			std::vector<double> lower_limit;
-			lower_limit.push_back(0);
-			
-		}
-}
-*/
