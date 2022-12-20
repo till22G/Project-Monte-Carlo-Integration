@@ -18,8 +18,6 @@ double Monte_Carlo_Integration::integrate(  size_t num_variables,
 
     //calculate the size of the intervals between upper and lower limit    
     std::vector<double> intervals;
-    bool integral_is_zero = true;
-
     for(size_t i = 0; i < upper_limits.size(); i++){
 
         // calculate the interval size

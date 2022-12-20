@@ -28,7 +28,7 @@ double integrand2(std::vector<double> parameters){
 double integrand3(std::vector<double> parameters){
 	double a = parameters[0];
 	double b = parameters[1];
-    double res = 1;
+    double res = sin(a) * sin(b);
     return res;
 }
 
@@ -58,7 +58,7 @@ TEST(IntegrationTestIntegral3, HandelsCorrectInputs){
 	lower_limit.push_back(0);
 	upper_limit.push_back(1);
 	lower_limit.push_back(0);
-	double result = 1;
+	double result = 0.21132;
 	EXPECT_TRUE(compareEstimationResults(result, Monte_Carlo_Integration::integrate(1, upper_limit, lower_limit, integrand3), 0.1));
 }
 
