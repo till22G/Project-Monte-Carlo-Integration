@@ -3,8 +3,7 @@
 
 // currently this function does not work for improper integrals (one or more limits are infinity)
 // or the integral is infinite
-double Monte_Carlo_Integration::integrate(  size_t num_variables, 
-                                            std::vector<double> upper_limits, 
+double Monte_Carlo_Integration::integrate(  std::vector<double> upper_limits, 
                                             std::vector<double> lower_limits,
                                             double (*integrand)(std::vector<double> variable_values),
                                             size_t nsim){
@@ -17,7 +16,7 @@ double Monte_Carlo_Integration::integrate(  size_t num_variables,
 
 
     //calculate the size of the intervals between upper and lower limit    
-    std::vector<double> intervals;
+    std::vector<double> intervals;  
     for(size_t i = 0; i < upper_limits.size(); i++){
 
         // calculate the interval size
@@ -44,10 +43,9 @@ double Monte_Carlo_Integration::integrate(  size_t num_variables,
     std::cout << "start simulation" << std::endl;
     for(size_t i = 0; i < nsim; i++){
         std::vector<double> variable_values;
-        for(size_t j = 0; j < num_variables; j++){
+        for(size_t j = 0; j < upper_limits.size(); j++){
             double upper = upper_limits[j];
             double lower = lower_limits[j];
-            //std::cout << "upper: " << upper << " lower: " << lower << std::endl; 
             dist = std::uniform_real_distribution<double>(lower, upper);
             double tmp = dist(rng);
             variable_values.push_back(tmp);
@@ -62,7 +60,7 @@ double Monte_Carlo_Integration::integrate(  size_t num_variables,
     for (auto& n : intervals){
         dim_intervals *= n;
     }
-    //std::cout << "dim intervals: " << dim_intervals << std::endl;
+    std::cout << "dim intervals: " << dim_intervals << std::endl;
 
     double cum_res = 0;
     for (auto& n : simulation_res){
@@ -73,6 +71,6 @@ double Monte_Carlo_Integration::integrate(  size_t num_variables,
 
     // approximates result
     double approximation_res = dim_intervals * cum_res/nsim;
-    std::cout << approximation_res << std::endl;
+    std::cout << "result: " << approximation_res << std::endl;
     return approximation_res;
 }
