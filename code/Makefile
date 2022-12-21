@@ -1,14 +1,21 @@
 bin=monte_carlo_integration
 CODEDIRS=.
-INCLUDEDIRS=. /usr/local/include
+INCLUDEDIRS=.
+
+I=/usr/include/python3.8 /home/tgalla/anaconda3/lib/python3.9/site-packages/pybind11/include /usr/include/python3.8
 
 CC=g++
 OPT=
 
+PCCFLAGS=-O3 -Wall -m64 -shared -std=c++17 -fPIC
+PPYINCLUDE=`python3 -m pybind11 --includes`
+PSPEC=`python3-config --extension-suffix`
+
+
 GTESTFLAGS= -pthread -lgtest_main -lgtest -lpthread
 LD_FLAGS= -L /usr/local/lib -l gtest -l pthread
 DEPFLAGS=-MP -MD
-CCFLAGS=-Wall -Wextra -g -std=c++17 $(foreach D, $(INCLUDEDIRS), -I$(D)) $(OPT) $(DEPFLAGS) $(GTESTFLAGS)
+CCFLAGS= -Wall -Wextra -std=c++17 -g $(foreach D, $(INCLUDEDIRS), -I$(D)) $(OPT) $(DEPFLAGS) $(GTESTFLAGS)
 
 CPPFILES=$(foreach D, $(CODEDIRS),$(wildcard $(D)/*.cpp))
 
@@ -19,13 +26,16 @@ DEPFILES=$(patsubst %.cpp, %.d, $(CPPFILES))
 all: $(bin)
 
 $(bin):$(OBJECTS)
-	$(CC) -o $@ $^ $(LD_FLAGS)
+	$(CC) -o $@ $^ $(LD_FLAGS) $(PPYINCLUDE)
 
 %.o:%.cpp
-	$(CC) $(CCFLAGS) -c -o $@ $^
+	$(CC) $(CCFLAGS) -c -o $@ $^ $(PPYINCLUDE)
+
+module:
+	$(CC) $(PCCFLAGS) $(PPYINCLUDE) MonteCarloIntegration.cpp -o mci$(PSPEC) -DbuildPythonModule
 
 test: $(bin)
 	./$(bin)
 
 clean:
-	rm -rf $(bin) $(OBJECTS) $(DEPFILES)
+	rm -rf $(bin) $(OBJECTS) $(DEPFILES) *.so

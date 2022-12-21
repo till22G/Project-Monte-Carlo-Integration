@@ -75,3 +75,8 @@ double MonteCarloIntegration::integrate(  std::vector<double> upper_limits,
     return approximation_res;
 }
 
+# if buildPythonModule
+# include <pybind11/pybind11.h>
+
+
+# endif

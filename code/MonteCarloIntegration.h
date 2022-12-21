@@ -6,6 +6,10 @@
 # include <chrono>
 # include <algorithm>
 
+# if buildPythonModule
+# include <pybind11/pybind11.h>
+# endif
+
 class MonteCarloIntegration{
     private:
     public:
