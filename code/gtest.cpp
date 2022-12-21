@@ -46,7 +46,7 @@ TEST(IntegrationTestIntegral1, HandelsCorrectInputs){
 	upper_limit.push_back(2);
 	lower_limit.push_back(0);
 	double result = 0.451948;
-	EXPECT_TRUE(compareEstimationResults(result, Monte_Carlo_Integration::integrate(upper_limit, lower_limit, integrand1), 0.1));
+	EXPECT_TRUE(compareEstimationResults(result, MonteCarloIntegration::integrate(upper_limit, lower_limit, integrand1), 0.1));
 }
 
 TEST(IntegrationTestIntegral2, HandelsCorrectInputs){	
@@ -55,7 +55,7 @@ TEST(IntegrationTestIntegral2, HandelsCorrectInputs){
 	upper_limit.push_back(10);
 	lower_limit.push_back(1);
 	double result = 22.312;
-	EXPECT_TRUE(compareEstimationResults(result, Monte_Carlo_Integration::integrate(upper_limit, lower_limit, integrand2), 0.1));
+	EXPECT_TRUE(compareEstimationResults(result, MonteCarloIntegration::integrate(upper_limit, lower_limit, integrand2), 0.1));
 }
 
 TEST(IntegrationTestIntegral3, HandelsCorrectInputs){	
@@ -66,7 +66,7 @@ TEST(IntegrationTestIntegral3, HandelsCorrectInputs){
 	upper_limit.push_back(5);
 	lower_limit.push_back(0);
 	double result = 7.163;
-	EXPECT_TRUE(compareEstimationResults(result, Monte_Carlo_Integration::integrate(upper_limit, lower_limit, integrand3), 0.1));
+	EXPECT_TRUE(compareEstimationResults(result, MonteCarloIntegration::integrate(upper_limit, lower_limit, integrand3), 0.1));
 }
 
 TEST(IntegrationTestIntegral4, HandelsCorrectInputs){	
@@ -79,7 +79,7 @@ TEST(IntegrationTestIntegral4, HandelsCorrectInputs){
 	upper_limit.push_back(5);
 	lower_limit.push_back(0);
 	double result = 0.367;
-	EXPECT_TRUE(compareEstimationResults(result, Monte_Carlo_Integration::integrate(upper_limit, lower_limit, integrand4), 0.1));
+	EXPECT_TRUE(compareEstimationResults(result, MonteCarloIntegration::integrate(upper_limit, lower_limit, integrand4), 0.1));
 }
 
 TEST(IntegrationTest, HandelsZeroInput){	
@@ -87,5 +87,5 @@ TEST(IntegrationTest, HandelsZeroInput){
 	upper_limit.push_back(0);
 	std::vector<double> lower_limit;
 	lower_limit.push_back(0);
-	EXPECT_ANY_THROW(Monte_Carlo_Integration::integrate(upper_limit, lower_limit, integrand1));
+	EXPECT_ANY_THROW(MonteCarloIntegration::integrate(upper_limit, lower_limit, integrand1));
 }

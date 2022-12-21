@@ -3,7 +3,7 @@
 
 // currently this function does not work for improper integrals (one or more limits are infinity)
 // or the integral is infinite
-double Monte_Carlo_Integration::integrate(  std::vector<double> upper_limits, 
+double MonteCarloIntegration::integrate(  std::vector<double> upper_limits, 
                                             std::vector<double> lower_limits,
                                             double (*integrand)(std::vector<double> variable_values),
                                             size_t nsim){
@@ -74,3 +74,4 @@ double Monte_Carlo_Integration::integrate(  std::vector<double> upper_limits,
     std::cout << "result: " << approximation_res << std::endl;
     return approximation_res;
 }
+

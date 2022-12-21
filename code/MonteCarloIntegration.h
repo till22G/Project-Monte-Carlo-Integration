@@ -6,7 +6,7 @@
 # include <chrono>
 # include <algorithm>
 
-class Monte_Carlo_Integration{
+class MonteCarloIntegration{
     private:
     public:
         static double integrate(std::vector<double> upper_limits, 
