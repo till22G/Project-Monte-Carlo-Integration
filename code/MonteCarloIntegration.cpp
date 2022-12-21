@@ -75,14 +75,23 @@ double MonteCarloIntegration::integrate(  std::vector<double> upper_limits,
     return approximation_res;
 }
 
+
+bool MonteCarloIntegration::test(){
+    return true;
+}
+
+
 # if buildPythonModule
 # include <pybind11/pybind11.h>
+# include <pybind11/stl.h>
+# include <pybind11/functional.h>
 
 namespace py = pybind11;
 
-PYBIND11_MODULE(MonteCarloIntegration, handle) {
+PYBIND11_MODULE(_monteCarloIntegration, handle) {
     py::class_<MonteCarloIntegration>(handle, "MonteCarloIntegration")
-        .def("integrate", &MonteCarloIntegration::integrate);
+        .def("integrate", &MonteCarloIntegration::integrate)
+        .def("test", &MonteCarloIntegration::test);
 }
 
 # endif

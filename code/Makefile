@@ -32,7 +32,7 @@ $(bin):$(OBJECTS)
 	$(CC) $(CCFLAGS) -c -o $@ $^ $(PPYINCLUDE)
 
 module:
-	$(CC) $(PCCFLAGS) $(PPYINCLUDE) MonteCarloIntegration.cpp -o mci$(PSPEC) -DbuildPythonModule
+	$(CC) $(PCCFLAGS) $(PPYINCLUDE) MonteCarloIntegration.cpp -o _monteCarloIntegration$(PSPEC) -DbuildPythonModule
 
 test: $(bin)
 	./$(bin)

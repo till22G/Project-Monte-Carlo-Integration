@@ -17,4 +17,6 @@ class MonteCarloIntegration{
                                 std::vector<double> lower_limits,
                                 double (*integrand)(std::vector<double> parameters),
                                 size_t nsim = 1000000);
+
+        static bool test();
 }; 
