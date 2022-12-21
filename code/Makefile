@@ -23,7 +23,7 @@ OBJECTS=$(patsubst %.cpp, %.o, $(CPPFILES))
 DEPFILES=$(patsubst %.cpp, %.d, $(CPPFILES))
 
 
-all: $(bin)
+all: $(bin) module
 
 $(bin):$(OBJECTS)
 	$(CC) -o $@ $^ $(LD_FLAGS) $(PPYINCLUDE)
@@ -37,5 +37,11 @@ module:
 test: $(bin)
 	./$(bin)
 
+test_module: module
+	python3 -m pytest -v
+
+test_all: test test_module
+
+
 clean:
-	rm -rf $(bin) $(OBJECTS) $(DEPFILES) *.so
+	rm -rf $(bin) $(OBJECTS) $(DEPFILES) *.so __pycache__/
