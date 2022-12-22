@@ -18,6 +18,4 @@ class MonteCarloIntegration{
                                 //double (*integrand)(std::vector<double> parameters),
                                 const std::function<double(std::vector<double>)> integrand,
                                 size_t nsim = 1000000);
-
-        static double test(std::vector<double> v1, std::vector<double> v2, const std::function<double(std::vector<double>)> integrand);
 }; 

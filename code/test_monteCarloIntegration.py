@@ -13,9 +13,6 @@ upper_limits = np.array([2],  dtype="float64")
 lower_limits = np.array([0],  dtype="float64")
 correct_res = 0.451948
 
-res = mci.MonteCarloIntegration.test(upper_limits, lower_limits, integrand1)
-print("py res test case : " + str(res))
-
 res_monte_carlo = mci.MonteCarloIntegration.integrate(upper_limits, lower_limits, integrand1, 100000)
 print("The correct result is: " + str(correct_res))
 print("The simulaition results is: " + str(res_monte_carlo))
