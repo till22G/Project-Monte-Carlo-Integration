@@ -1,4 +1,4 @@
-import _monteCarloIntegration
+import _monteCarloIntegration as mci
 import numpy as np
 import math
 
@@ -6,16 +6,18 @@ def compareEstimationResults(a, b, eps):
 	return (abs(a - b) < eps)
 
 def integrand1(parameters):
-	return math.sin(parameters[0]) * math.sin(parameters[1]) * math.sin(parameters[2]) 
+	return math.sin(parameters[0] *parameters[0] * parameters[0])
 
 
-upper_limits = np.array(2)
-lower_limits = np.array(0)
-res =  0.451948
+upper_limits = np.array([2],  dtype="float64")
+lower_limits = np.array([0],  dtype="float64")
+correct_res = 0.451948
 
-print(_monteCarloIntegration.MonteCarloIntegration.test())
+res = mci.MonteCarloIntegration.test(upper_limits, lower_limits, integrand1)
+print("py res test case : " + str(res))
 
-print(_monteCarloIntegration.MonteCarloIntegration.integrate(upper_limits, lower_limits, integrand1))
-
+res_monte_carlo = mci.MonteCarloIntegration.integrate(upper_limits, lower_limits, integrand1, 100000)
+print("The correct result is: " + str(correct_res))
+print("The simulaition results is: " + str(res_monte_carlo))
 
 

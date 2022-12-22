@@ -3,10 +3,11 @@
 
 // currently this function does not work for improper integrals (one or more limits are infinity)
 // or the integral is infinite
-double MonteCarloIntegration::integrate(  std::vector<double> upper_limits, 
-                                            std::vector<double> lower_limits,
-                                            double (*integrand)(std::vector<double> variable_values),
-                                            size_t nsim){
+double MonteCarloIntegration::integrate(std::vector<double> upper_limits, 
+                                        std::vector<double> lower_limits,
+                                        //double (*integrand)(std::vector<double> variable_values),
+                                        const std::function<double(std::vector<double>)> integrand,
+                                        size_t nsim){
 
     // implement importance sampling?
     // 
@@ -29,7 +30,7 @@ double MonteCarloIntegration::integrate(  std::vector<double> upper_limits,
         }
     }
     
-    std::cout << "Number parameters " << upper_limits.size() << std::endl;
+    std::cout << "Number of variables " << upper_limits.size() << std::endl;
 
     std::vector<double> simulation_res(nsim);
     //std::cout << "sim" << std::endl;
@@ -40,7 +41,7 @@ double MonteCarloIntegration::integrate(  std::vector<double> upper_limits,
     std::uniform_real_distribution<double> dist;
 
 
-    std::cout << "start simulation" << std::endl;
+    std::cout << "start simulation:" << std::endl;
     for(size_t i = 0; i < nsim; i++){
         std::vector<double> variable_values;
         for(size_t j = 0; j < upper_limits.size(); j++){
@@ -60,24 +61,26 @@ double MonteCarloIntegration::integrate(  std::vector<double> upper_limits,
     for (auto& n : intervals){
         dim_intervals *= n;
     }
-    std::cout << "dim intervals: " << dim_intervals << std::endl;
+    std::cout << "Dimension of intervals: " << dim_intervals << std::endl;
 
     double cum_res = 0;
     for (auto& n : simulation_res){
         cum_res += n;
     }
 
-    std::cout << "cum res " << cum_res << std::endl;
+    std::cout << "Cummulated simulation result: " << cum_res << std::endl;
 
     // approximates result
     double approximation_res = dim_intervals * cum_res/nsim;
-    std::cout << "result: " << approximation_res << std::endl;
+    std::cout << "Approximation: " << approximation_res << std::endl;
     return approximation_res;
 }
 
 
-bool MonteCarloIntegration::test(){
-    return true;
+double MonteCarloIntegration::test(std::vector<double> v1, std::vector<double> v2, const std::function<double(std::vector<double>)> integrand){
+    double res = integrand(v1);
+    std::cout << "res" << res << std::endl;
+    return res;
 }
 
 
