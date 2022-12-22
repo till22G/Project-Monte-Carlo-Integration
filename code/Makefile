@@ -25,11 +25,12 @@ DEPFILES=$(patsubst %.cpp, %.d, $(CPPFILES))
 
 all: $(bin) module
 
-$(bin):$(OBJECTS)
+$(bin): $(OBJECTS)
 	$(CC) -o $@ $^ $(LD_FLAGS) $(PPYINCLUDE)
 
 %.o:%.cpp
 	$(CC) $(CCFLAGS) -c -o $@ $^ $(PPYINCLUDE)
+
 
 module:
 	$(CC) $(PCCFLAGS) $(PPYINCLUDE) MonteCarloIntegration.cpp -o _monteCarloIntegration$(PSPEC) -DbuildPythonModule
