@@ -4,7 +4,7 @@ std::vector<std::vector<double>> MonteCarloIntegration::uniform_sampling(std::ve
                                                                          std::vector<double> lower_limits,
                                                                          size_t nsim){
 
-    std::vector<std::vector<double>> samples;
+    std::vector<std::vector<double>> samples(nsim);
     
     std::random_device rd;
     std::mt19937 rng(std::chrono::steady_clock::now().time_since_epoch().count());
@@ -12,14 +12,13 @@ std::vector<std::vector<double>> MonteCarloIntegration::uniform_sampling(std::ve
     std::uniform_real_distribution<double> dist;
 
     for(size_t i = 0; i < nsim; i++){
-        std::vector<double> variable_values;
+        std::vector<double> variable_values(upper_limits.size());
         for(size_t j = 0; j < upper_limits.size(); j++){
             dist = std::uniform_real_distribution<double>(lower_limits[j], upper_limits[j]);
             double tmp = dist(rng);
-            variable_values.push_back(tmp);
+            variable_values[j] = tmp;
         }
-    //simulation_res[i] = integrand(variable_values);
-    samples.push_back(variable_values);
+    samples[i] = variable_values;
     }
     return samples;
 }
