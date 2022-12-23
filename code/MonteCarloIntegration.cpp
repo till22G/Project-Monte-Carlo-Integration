@@ -1,5 +1,29 @@
 #include "MonteCarloIntegration.h"
 
+std::vector<std::vector<double>> MonteCarloIntegration::uniform_sampling(std::vector<double> upper_limits,
+                                                                         std::vector<double> lower_limits,
+                                                                         size_t nsim){
+
+    std::vector<std::vector<double>> samples;
+    
+    std::random_device rd;
+    std::mt19937 rng(std::chrono::steady_clock::now().time_since_epoch().count());
+    rng = std::mt19937(rd());
+    std::uniform_real_distribution<double> dist;
+
+    for(size_t i = 0; i < nsim; i++){
+        std::vector<double> variable_values;
+        for(size_t j = 0; j < upper_limits.size(); j++){
+            dist = std::uniform_real_distribution<double>(lower_limits[j], upper_limits[j]);
+            double tmp = dist(rng);
+            variable_values.push_back(tmp);
+        }
+    //simulation_res[i] = integrand(variable_values);
+    samples.push_back(variable_values);
+    }
+    return samples;
+}
+
 
 // currently this function does not work for improper integrals (one or more limits are infinity)
 // or the integral is infinite
@@ -35,23 +59,10 @@ double MonteCarloIntegration::integrate(std::vector<double> upper_limits,
     std::vector<double> simulation_res(nsim);
     //std::cout << "sim" << std::endl;
 
-    std::random_device rd;
-    std::mt19937 rng(std::chrono::steady_clock::now().time_since_epoch().count());
-    rng = std::mt19937(rd());
-    std::uniform_real_distribution<double> dist;
-
-
     std::cout << "start simulation:" << std::endl;
+    std::vector<std::vector<double>> samples = uniform_sampling(upper_limits, lower_limits, nsim);
     for(size_t i = 0; i < nsim; i++){
-        std::vector<double> variable_values;
-        for(size_t j = 0; j < upper_limits.size(); j++){
-            double upper = upper_limits[j];
-            double lower = lower_limits[j];
-            dist = std::uniform_real_distribution<double>(lower, upper);
-            double tmp = dist(rng);
-            variable_values.push_back(tmp);
-        }
-    simulation_res[i] = integrand(variable_values);
+        simulation_res[i] = integrand(samples[i]);
     }
 
     // multiply the dimensions used for the multidimensional integral
