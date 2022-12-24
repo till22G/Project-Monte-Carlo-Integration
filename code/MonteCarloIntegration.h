@@ -12,9 +12,12 @@
 
 class MonteCarloIntegration{
     private:
-        static std::vector<std::vector<double>> uniform_sampling(std::vector<double> upper_limits,
-                                                                 std::vector<double> lower_limits,
+        static std::vector<std::vector<double>> uniform_sampling(const std::vector<double> &upper_limits,
+                                                                 const std::vector<double> &lower_limits,
                                                                  size_t nsim);
+
+        static std::vector<double> calculate_intervals(const std::vector<double> &upper_limits,
+                                                       const std::vector<double> &lower_limits);
     public:
         static double integrate(std::vector<double> upper_limits, 
                                 std::vector<double> lower_limits,
